@@ -1,10 +1,8 @@
 package org.example.bank.operations.processors;
 
-import org.example.bank.account.Account;
 import org.example.bank.account.AccountService;
 import org.example.bank.operations.ConsoleOperationType;
 import org.example.bank.operations.OperationCommandProcessor;
-import org.example.bank.user.User;
 import org.example.bank.user.UserService;
 import org.springframework.stereotype.Component;
 
@@ -30,13 +28,8 @@ public class CloseAccountProcessor implements OperationCommandProcessor {
     @Override
     public void processOperation() {
         System.out.println("Enter account id to close: ");
-        int accountId = Integer.parseInt(scanner.nextLine());
-        Account account = accountService.closeAccount(accountId);
-
-        User user= userService.findUserById(account.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("No such user with id=%s"
-                        .formatted(account.getId())));
-        user.getAccountList().remove(account);
+        var accountId = Long.parseLong(scanner.nextLine());
+        accountService.closeAccount(accountId);
 
         System.out.println("Account successfully closed with id: %s"
                 .formatted(accountId));
