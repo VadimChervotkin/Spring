@@ -21,7 +21,7 @@ public class AccountWithdrawProcessor implements OperationCommandProcessor {
     @Override
     public void processOperation() {
         System.out.println("Enter account id");
-        int accountId = Integer.parseInt(scanner.nextLine());
+        var accountId = Long.parseLong(scanner.nextLine());
         System.out.println("Enter amount to withdraw");
         int amountToWithdraw = Integer.parseInt(scanner.nextLine());
         accountService.withdrawFromAccount(accountId, amountToWithdraw);

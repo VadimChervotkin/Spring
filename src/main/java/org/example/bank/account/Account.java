@@ -1,22 +1,41 @@
 package org.example.bank.account;
 
+import jakarta.persistence.*;
+import org.example.bank.user.User;
+
+@Entity
+@Table(name = "accounts")
 public class Account {
-    private final int id;
-    private final int userId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "money_amount")
     private int moneyAmount;
 
-    public Account(int id, int userId, int moneyAmount) {
-        this.id = id;
-        this.userId = userId;
+    public Account() {
+    }
+
+    public Account(User user, int moneyAmount) {
+        this.user = user;
         this.moneyAmount = moneyAmount;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getMoneyAmount() {
@@ -31,7 +50,6 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", userId=" + userId +
                 ", moneyAmount=" + moneyAmount +
                 '}';
     }
